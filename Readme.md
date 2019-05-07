@@ -38,3 +38,12 @@ CREATE TABLE sqlite_sequence(name,seq);
 sqlite> 
 
 ```
+
+Run main with negroni middleware
+```
+ngans-mbp:Go-Library ngan$ go run main.go
+[negroni] listening on :8080
+[negroni] 2019-05-07T12:52:39-07:00 | 200 |      2.006094ms | localhost:8080 | GET /
+[negroni] 2019-05-07T12:52:39-07:00 | 200 |      68.636µs | localhost:8080 | GET /favicon.ico
+
+```

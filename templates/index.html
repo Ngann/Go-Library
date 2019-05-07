@@ -1,13 +1,47 @@
 <html>
 <head></head>
-<body>
-    <p>Hello, {{.Name}}</p>
-    {{if .DBStatus}}
-    <p>The database connection is alive!</p>
-    {{else}}
-    <p>The database connection is dead!</p>
-    {{end}}
-</body>
+    <body>
+     <form id=""search-form>
+         <input name="search"/>
+         <input type="submit" value="Search">
+     </form>
+
+     <table>
+         <thead>
+            <tr>
+                <th width="40%">Title</th>
+                <th width="30%">Author</th>
+                <th width="10%">Year</th>
+                <th width="20%">ID</th>
+            </tr>
+         </thead>
+         <tbody id="search-result"></tbody>
+     </table>
+
+     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
+     <script type="text/javascript">
+        function submitSearch() {
+            $.ajax ({
+                url: "/search",
+                method: "POST",
+                data: $("#search-form").serialize(),
+                success: function(rawData) {
+                    var parsed = JSON.parse(rawData);
+                    if (!parsed) return;
+
+                    var searchResults = $("#search-results");
+                    searchResults.empty();
+
+                    parsed.forEach(function(result){
+                        var row = $("test");
+                        searchResults.append(row);
+                    });
+                }
+            });
+            return false;
+        }
+     </script>
+    </body>
 </html>
 
 {{/*http://localhost:8080/?name=Ngan*/}}

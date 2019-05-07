@@ -26,10 +26,20 @@ type SearchResult struct {
 	ID string `xml:"owi,attr"`
 }
 
+var db *sql.DB
+
+func verifyDatabase(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+	if err := db.Ping(); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	next(w,r)
+}
+
 func main() {
 	templates := template.Must(template.ParseFiles("templates/index.html"))
 
-	db, _ := sql.Open("sqlite3", "dev.db")
+	db, _ = sql.Open("sqlite3", "dev.db")
 
 	mux := http.NewServeMux()
 
@@ -79,6 +89,7 @@ func main() {
 	})
 
 	n := negroni.Classic()
+	n.Use(negroni.HandlerFunc(verifyDatabase))
 	n.UseHandler(mux)
 	n.Run(":8080")
 }

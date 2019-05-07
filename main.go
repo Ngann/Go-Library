@@ -68,7 +68,7 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 
-		_, err = db.Exec("insert into books (pk, title, author, id, classification) val (?, ?, ?, ?,)",
+		_, err = db.Exec("insert into books (pk, title, author, id, classification) val (?, ?, ?, ?, ?)",
 									nil, book.BookData.Title, book.BookData.Author, book.BookData.ID,
 									book.Classification.MostPopular)
 		if err != nil {
